@@ -47,8 +47,7 @@ TennisGame1.prototype.highestScoringPlayer = function() {
 }
 
 TennisGame1.prototype.isWon = function() {
-    const highestScoreIsGreaterThanForty = this.scores[this.highestScoringPlayer()] >= 4;
-    return this.differenceBetweenPlayerScores() >= 2 && highestScoreIsGreaterThanForty;
+    return this.differenceBetweenPlayerScores() >= 2 && this.scoreIsAdvantage();
 }
 
 TennisGame1.prototype.getScore = function() {
@@ -65,7 +64,10 @@ TennisGame1.prototype.getScore = function() {
     
     if (this.scoreIsEqual()) {
         const equalsScorePrinter = new EqualsScorePrinter({
+            playerOneName: _playerOneName,
+            playerTwoName: _playerTwoName,
             playerOneScore: this.playerOneScore(),
+            playerTwoScore: this.playerTwoScore()
         });
         
         return equalsScorePrinter.print();
@@ -83,7 +85,9 @@ TennisGame1.prototype.getScore = function() {
     }
     
     const regularScorePrinter = new RegularScorePrinter({
-        playerOneScore: this.playerOneScore(), 
+        playerOneName: _playerOneName,
+        playerTwoName: _playerTwoName,
+        playerOneScore: this.playerOneScore(),
         playerTwoScore: this.playerTwoScore()
     });
 
