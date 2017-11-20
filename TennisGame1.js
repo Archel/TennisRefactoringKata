@@ -2,11 +2,11 @@ const LOVE = 0;
 const FIFTEEN = 1;
 const THIRTY = 2;
 const FORTY = 3;
-const Score = {};
-Score[LOVE] = "Love";
-Score[FIFTEEN] = "Fifteen";
-Score[THIRTY] = "Thirty";
-Score[FORTY] = "Forty";
+const ScoreName = {};
+ScoreName[LOVE] = "Love";
+ScoreName[FIFTEEN] = "Fifteen";
+ScoreName[THIRTY] = "Thirty";
+ScoreName[FORTY] = "Forty";
 
 const SCORE_SEPARATOR = "-";
 let _playerOneName, _playerTwoName;
@@ -34,7 +34,7 @@ TennisGame1.prototype.wonPoint = function(playerName) {
 TennisGame1.prototype.getEqualsScore = function() {
     let score = this.playerOneScore();
     if (score > 2) { return 'Deuce'; }
-    return Score[score] + '-All';
+    return ScoreName[score] + '-All';
 }
 
 TennisGame1.prototype.scoreIsEqual = function() {
@@ -43,11 +43,6 @@ TennisGame1.prototype.scoreIsEqual = function() {
 
 TennisGame1.prototype.scoreIsAdvantage = function() {
     return this.playerOneScore() >= 4 || this.playerTwoScore() >= 4;
-}
-
-TennisGame1.prototype.determinePlayersAdvantage = function() {
-    const advantagePlayer = this.playerOneScore() > this.playerTwoScore() ? _playerOneName : _playerTwoName;
-    return 'Advantage ' + this.highestScoringPlayer();
 }
 
 TennisGame1.prototype.highestScoringPlayer = function() {
@@ -60,23 +55,22 @@ TennisGame1.prototype.isAdvantage = function() {
 }
 
 TennisGame1.prototype.isWon = function() {
-    return this.differenceBetweenPlayerScores() >= 2;
+    const highestScoreIsGreaterThanForty = this.scores[this.highestScoringPlayer()] >= 4;
+    return this.differenceBetweenPlayerScores() >= 2 && highestScoreIsGreaterThanForty;
 }
 
-TennisGame1.prototype.determineAdvantageScore = function() {
-    const scoreDifference = this.differenceBetweenPlayerScores();
-    if (this.isWon()) {
-        return "Win for " + this.highestScoringPlayer();
-    }
-    
-    return this.determinePlayersAdvantage();
+TennisGame1.prototype.determineAdvantageScore = function() {    
+    return 'Advantage ' + this.highestScoringPlayer();
 }
 
 TennisGame1.prototype.determineRegularScore = function() {
-    return Score[this.playerOneScore()] + SCORE_SEPARATOR + Score[this.playerTwoScore()];
+    return ScoreName[this.playerOneScore()] + SCORE_SEPARATOR + ScoreName[this.playerTwoScore()];
 }
 
 TennisGame1.prototype.getScore = function() {
+    if (this.isWon()) {
+        return "Win for " + this.highestScoringPlayer();
+    }
     
     if (this.scoreIsEqual()) {
         return this.getEqualsScore();
