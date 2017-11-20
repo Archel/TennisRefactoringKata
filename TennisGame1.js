@@ -1,20 +1,20 @@
-var TennisGame1 = function(player1Name, player2Name) {
-    this.m_score1 = 0;
-    this.m_score2 = 0;
-    this.player1Name = player1Name;
-    this.player2Name = player2Name;
+var TennisGame1 = function(playerOneName, playerTwoName) {
+    this.playerOneScore = 0;
+    this.playerTwoScore = 0;
+    this.playerOneName = playerOneName;
+    this.playerTwoName = playerTwoName;
 };
 
 TennisGame1.prototype.wonPoint = function(playerName) {
     if (playerName === "player1")
-        this.m_score1 += 1;
+        this.playerOneScore += 1;
     else
-        this.m_score2 += 1;
+        this.playerTwoScore += 1;
 };
 
 TennisGame1.prototype.getEqualsScore = function(playerOneScore) {
     let score = "";
-    switch (this.m_score1) {
+    switch (this.playerOneScore) {
         case 0:
             score = "Love-All";
             break;
@@ -35,20 +35,20 @@ TennisGame1.prototype.getEqualsScore = function(playerOneScore) {
 TennisGame1.prototype.getScore = function() {
     var score = "";
     var tempScore = 0;
-    if (this.m_score1 === this.m_score2) {
-        score = this.getEqualsScore(this.m_score1);
-    } else if (this.m_score1 >= 4 || this.m_score2 >= 4) {
-        var minusResult = this.m_score1 - this.m_score2;
+    if (this.playerOneScore === this.playerTwoScore) {
+        score = this.getEqualsScore(this.playerOneScore);
+    } else if (this.playerOneScore >= 4 || this.playerTwoScore >= 4) {
+        var minusResult = this.playerOneScore - this.playerTwoScore;
         if (minusResult === 1) score = "Advantage player1";
         else if (minusResult === -1) score = "Advantage player2";
         else if (minusResult >= 2) score = "Win for player1";
         else score = "Win for player2";
     } else {
         for (var i = 1; i < 3; i++) {
-            if (i === 1) tempScore = this.m_score1;
+            if (i === 1) tempScore = this.playerOneScore;
             else {
                 score += "-";
-                tempScore = this.m_score2;
+                tempScore = this.playerTwoScore;
             }
             switch (tempScore) {
                 case 0:
