@@ -2,6 +2,8 @@ if (typeof ScoreName === "undefined") {
     const ScoreName = require("./src/ScoreNamesEnum");
 }
 
+const SCORE_SEPARATOR = "-";
+
 class RegularScorePrinter {
     constructor(printData) {
         this.printData = printData;
