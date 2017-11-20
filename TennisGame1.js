@@ -47,17 +47,24 @@ TennisGame1.prototype.scoreIsAdvantage = function() {
     return this.playerOneScore >= 4 || this.playerTwoScore >= 4;
 }
 
+TennisGame1.prototype.determineAdvantageScore = function() {
+    let score;
+    const minusResult = this.playerOneScore - this.playerTwoScore;
+    if (minusResult === 1) score = "Advantage player1";
+    else if (minusResult === -1) score = "Advantage player2";
+    else if (minusResult >= 2) score = "Win for player1";
+    else score = "Win for player2";
+    
+    return score;
+}
+
 TennisGame1.prototype.getScore = function() {
     var score = "";
     var tempScore = 0;
     if (this.scoreIsEqual()) {
         score = this.getEqualsScore(this.playerOneScore);
     } else if (this.scoreIsAdvantage()) {
-        var minusResult = this.playerOneScore - this.playerTwoScore;
-        if (minusResult === 1) score = "Advantage player1";
-        else if (minusResult === -1) score = "Advantage player2";
-        else if (minusResult >= 2) score = "Win for player1";
-        else score = "Win for player2";
+        score = this.determineAdvantageScore();
     } else {
         for (var i = 1; i < 3; i++) {
             if (i === 1) tempScore = this.playerOneScore;
