@@ -1,9 +1,11 @@
-let RegularScores = {
+const RegularScores = {
     0: "Love",
     1: "Fifteen",
     2: "Thirty",
     3: "Forty"
 }
+
+const SCORE_SEPARATOR = "-";
 
 var TennisGame1 = function(playerOneName, playerTwoName) {
     this.playerOneScore = 0;
@@ -59,22 +61,11 @@ TennisGame1.prototype.determineAdvantageScore = function() {
 }
 
 TennisGame1.prototype.determineRegularScore = function() {
-    let score = "";
-    for (var i = 1; i < 3; i++) {
-        if (i === 1) tempScore = this.playerOneScore;
-        else {
-            score += "-";
-            tempScore = this.playerTwoScore;
-        }
-        score += RegularScores[tempScore];
-    }
-
-    return score;
+    return RegularScores[this.playerOneScore] + SCORE_SEPARATOR + RegularScores[this.playerTwoScore];
 }
 
 TennisGame1.prototype.getScore = function() {
-    var score = "";
-    var tempScore = 0;
+    let score = "";
     if (this.scoreIsEqual()) {
         score = this.getEqualsScore(this.playerOneScore);
     } else if (this.scoreIsAdvantage()) {
