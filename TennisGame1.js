@@ -32,12 +32,20 @@ TennisGame1.prototype.getEqualsScore = function(playerOneScore) {
     return score;
 }
 
+TennisGame1.prototype.scoreIsEqual = function() {
+    return this.playerOneScore === this.playerTwoScore;
+}
+
+TennisGame1.prototype.scoreIsAdvantage = function() {
+    return this.playerOneScore >= 4 || this.playerTwoScore >= 4;
+}
+
 TennisGame1.prototype.getScore = function() {
     var score = "";
     var tempScore = 0;
-    if (this.playerOneScore === this.playerTwoScore) {
+    if (this.scoreIsEqual()) {
         score = this.getEqualsScore(this.playerOneScore);
-    } else if (this.playerOneScore >= 4 || this.playerTwoScore >= 4) {
+    } else if (this.scoreIsAdvantage()) {
         var minusResult = this.playerOneScore - this.playerTwoScore;
         if (minusResult === 1) score = "Advantage player1";
         else if (minusResult === -1) score = "Advantage player2";
