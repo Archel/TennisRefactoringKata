@@ -33,12 +33,6 @@ TennisGame1.prototype.wonPoint = function(playerName) {
     this.scores[playerName] += 1;
 };
 
-TennisGame1.prototype.outputEqualsScore = function() {
-    let score = this.playerOneScore();
-    if (score > 2) { return 'Deuce'; }
-    return ScoreName[score] + '-All';
-}
-
 TennisGame1.prototype.scoreIsEqual = function() {
     return this.playerOneScore() === this.playerTwoScore();
 }
@@ -57,13 +51,16 @@ TennisGame1.prototype.isWon = function() {
     return this.differenceBetweenPlayerScores() >= 2 && highestScoreIsGreaterThanForty;
 }
 
-TennisGame1.prototype.outputAdvantageScore = function() {    
-    return 'Advantage ' + this.highestScoringPlayer();
-}
-
 TennisGame1.prototype.getScore = function() {
     if (this.isWon()) {
-        return "Win for " + this.highestScoringPlayer();
+        const winnerScorePrinter = new WinnerScorePrinter({
+            playerOneName: _playerOneName,
+            playerTwoName: _playerTwoName,
+            playerOneScore: this.playerOneScore(),
+            playerTwoScore: this.playerTwoScore()
+        });
+        
+        return winnerScorePrinter.print();
     }
     
     if (this.scoreIsEqual()) {
