@@ -1,9 +1,12 @@
-const RegularScores = {
-    0: "Love",
-    1: "Fifteen",
-    2: "Thirty",
-    3: "Forty"
-}
+const LOVE = 0;
+const FIFTEEN = 1;
+const THIRTY = 2;
+const FORTY = 3;
+const RegularScores = {};
+RegularScores[LOVE] = "Love";
+RegularScores[FIFTEEN] = "Fifteen";
+RegularScores[THIRTY] = "Thirty";
+RegularScores[FORTY] = "Forty";
 
 const SCORE_SEPARATOR = "-";
 
@@ -22,23 +25,8 @@ TennisGame1.prototype.wonPoint = function(playerName) {
 };
 
 TennisGame1.prototype.getEqualsScore = function(playerOneScore) {
-    let score = "";
-    switch (this.playerOneScore) {
-        case 0:
-            score = "Love-All";
-            break;
-        case 1:
-            score = "Fifteen-All";
-            break;
-        case 2:
-            score = "Thirty-All";
-            break;
-        default:
-            score = "Deuce";
-            break;
-    }
-
-    return score;
+    if (this.playerOneScore > 2) { return 'Deuce'; }
+    return RegularScores[this.playerOneScore] + '-All';
 }
 
 TennisGame1.prototype.scoreIsEqual = function() {
@@ -49,15 +37,26 @@ TennisGame1.prototype.scoreIsAdvantage = function() {
     return this.playerOneScore >= 4 || this.playerTwoScore >= 4;
 }
 
+TennisGame1.prototype.determinePlayersAdvantage = function() {
+    const advantagePlayer = this.playerOneScore > this.playerTwoScore ? this.playerOneName : this.playerTwoName
+    return 'Advantage ' + advantagePlayer;
+}
+
+TennisGame1.prototype.isAdvantatge = function() {
+    return Math.abs(this.playerOneScore - this.playerTwoScore) === 1;
+}
+
+TennisGame1.prototype.isWon = function() {
+    return Math.abs(this.playerOneScore - this.playerTwoScore) >= 2;
+}
+
 TennisGame1.prototype.determineAdvantageScore = function() {
-    let score;
-    const minusResult = this.playerOneScore - this.playerTwoScore;
-    if (minusResult === 1) score = "Advantage player1";
-    else if (minusResult === -1) score = "Advantage player2";
-    else if (minusResult >= 2) score = "Win for player1";
-    else score = "Win for player2";
+    const scoreDifference = this.playerOneScore - this.playerTwoScore;
+    if (this.isWon()) {
+        return "Win for " + (scoreDifference >= 2 ? this.playerOneName : this.playerTwoName);
+    }
     
-    return score;
+    return this.determinePlayersAdvantage();
 }
 
 TennisGame1.prototype.determineRegularScore = function() {
