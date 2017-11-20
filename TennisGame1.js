@@ -67,7 +67,11 @@ TennisGame1.prototype.getScore = function() {
     }
     
     if (this.scoreIsEqual()) {
-        return this.outputEqualsScore();
+        const equalsScorePrinter = new EqualsScorePrinter({
+            playerOneScore: this.playerOneScore(),
+        });
+        
+        return equalsScorePrinter.print();
     } 
 
     if (this.scoreIsAdvantage()) {

@@ -10,4 +10,8 @@ ScoreName[FORTY] = "Forty";
 
 if (typeof window === "undefined") {
     module.exports = ScoreName;
+    module.exports.LOVE = LOVE;
+    module.exports.FIFTEEN = FIFTEEN;
+    module.exports.THIRTY = THIRTY;
+    module.exports.FORTY = FORTY;
 }
