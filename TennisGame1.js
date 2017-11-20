@@ -6,6 +6,10 @@ if (typeof RegularScorePrinter === "undefined") {
     const RegularScorePrinter = require("./src/RegularScorePrinter");
 }
 
+if (typeof AdvantageScorePrinter === "undefined") {
+    const AdvantageScorePrinter = require("./src/AdvantageScorePrinter");
+}
+
 const SCORE_SEPARATOR = "-";
 let _playerOneName, _playerTwoName;
 
@@ -67,13 +71,21 @@ TennisGame1.prototype.getScore = function() {
     } 
 
     if (this.scoreIsAdvantage()) {
-        return this.outputAdvantageScore();
+        const advantageScorePrinter = new AdvantageScorePrinter({
+            playerOneName: _playerOneName,
+            playerTwoName: _playerTwoName,
+            playerOneScore: this.playerOneScore(),
+            playerTwoScore: this.playerTwoScore()
+        });
+        
+        return advantageScorePrinter.print();
     }
     
     const regularScorePrinter = new RegularScorePrinter({
         playerOneScore: this.playerOneScore(), 
         playerTwoScore: this.playerTwoScore()
     });
+
     return regularScorePrinter.print();
 };
 

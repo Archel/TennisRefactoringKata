@@ -8,4 +8,6 @@ ScoreName[FIFTEEN] = "Fifteen";
 ScoreName[THIRTY] = "Thirty";
 ScoreName[FORTY] = "Forty";
 
-module.exports = ScoreName;
+if (typeof window === "undefined") {
+    module.exports = ScoreName;
+}

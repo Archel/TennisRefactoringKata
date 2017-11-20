@@ -13,4 +13,6 @@ class RegularScorePrinter {
     }
 }
 
-module.exports = RegularScorePrinter;
+if (typeof window === "undefined") {
+    module.exports = RegularScorePrinter;
+}
