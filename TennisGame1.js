@@ -1,12 +1,10 @@
-const LOVE = 0;
-const FIFTEEN = 1;
-const THIRTY = 2;
-const FORTY = 3;
-const ScoreName = {};
-ScoreName[LOVE] = "Love";
-ScoreName[FIFTEEN] = "Fifteen";
-ScoreName[THIRTY] = "Thirty";
-ScoreName[FORTY] = "Forty";
+if (typeof ScoreName === "undefined") {
+    const ScoreName = require("./src/ScoreNamesEnum");
+}
+
+if (typeof RegularScorePrinter === "undefined") {
+    const RegularScorePrinter = require("./src/RegularScorePrinter");
+}
 
 const SCORE_SEPARATOR = "-";
 let _playerOneName, _playerTwoName;
@@ -71,18 +69,16 @@ TennisGame1.prototype.getScore = function() {
     if (this.scoreIsAdvantage()) {
         return this.outputAdvantageScore();
     }
-    const regularScorePrinter = new RegularScorePrinter();
-    return regularScorePrinter.print(this.playerOneScore(), this.playerTwoScore());
+    
+    const regularScorePrinter = new RegularScorePrinter({
+        playerOneScore: this.playerOneScore(), 
+        playerTwoScore: this.playerTwoScore()
+    });
+    return regularScorePrinter.print();
 };
 
 TennisGame1.prototype.differenceBetweenPlayerScores = function() {
     return Math.abs(this.scores[_playerOneName] - this.scores[_playerTwoName]);
-}
-
-class RegularScorePrinter {
-    print(playerOneScore, playerTwoScore) {
-        return ScoreName[playerOneScore] + SCORE_SEPARATOR + ScoreName[playerTwoScore]
-    }
 }
 
 if (typeof window === "undefined") {
