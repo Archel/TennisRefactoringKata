@@ -58,6 +58,20 @@ TennisGame1.prototype.determineAdvantageScore = function() {
     return score;
 }
 
+TennisGame1.prototype.determineRegularScore = function() {
+    let score = "";
+    for (var i = 1; i < 3; i++) {
+        if (i === 1) tempScore = this.playerOneScore;
+        else {
+            score += "-";
+            tempScore = this.playerTwoScore;
+        }
+        score += RegularScores[tempScore];
+    }
+
+    return score;
+}
+
 TennisGame1.prototype.getScore = function() {
     var score = "";
     var tempScore = 0;
@@ -66,14 +80,7 @@ TennisGame1.prototype.getScore = function() {
     } else if (this.scoreIsAdvantage()) {
         score = this.determineAdvantageScore();
     } else {
-        for (var i = 1; i < 3; i++) {
-            if (i === 1) tempScore = this.playerOneScore;
-            else {
-                score += "-";
-                tempScore = this.playerTwoScore;
-            }
-            score += RegularScores[tempScore];
-        }
+        score = this.determineRegularScore();
     }
     return score;
 };
