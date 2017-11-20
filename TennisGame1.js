@@ -31,7 +31,7 @@ TennisGame1.prototype.wonPoint = function(playerName) {
     this.scores[playerName] += 1;
 };
 
-TennisGame1.prototype.getEqualsScore = function() {
+TennisGame1.prototype.outputEqualsScore = function() {
     let score = this.playerOneScore();
     if (score > 2) { return 'Deuce'; }
     return ScoreName[score] + '-All';
@@ -50,21 +50,13 @@ TennisGame1.prototype.highestScoringPlayer = function() {
     return this.playerOneScore() > this.playerTwoScore() ? _playerOneName : _playerTwoName;
 }
 
-TennisGame1.prototype.isAdvantage = function() {
-    return this.differenceBetweenPlayerScores() === 1;
-}
-
 TennisGame1.prototype.isWon = function() {
     const highestScoreIsGreaterThanForty = this.scores[this.highestScoringPlayer()] >= 4;
     return this.differenceBetweenPlayerScores() >= 2 && highestScoreIsGreaterThanForty;
 }
 
-TennisGame1.prototype.determineAdvantageScore = function() {    
+TennisGame1.prototype.outputAdvantageScore = function() {    
     return 'Advantage ' + this.highestScoringPlayer();
-}
-
-TennisGame1.prototype.determineRegularScore = function() {
-    return ScoreName[this.playerOneScore()] + SCORE_SEPARATOR + ScoreName[this.playerTwoScore()];
 }
 
 TennisGame1.prototype.getScore = function() {
@@ -73,18 +65,24 @@ TennisGame1.prototype.getScore = function() {
     }
     
     if (this.scoreIsEqual()) {
-        return this.getEqualsScore();
+        return this.outputEqualsScore();
     } 
-    
-    if (this.scoreIsAdvantage()) {
-        return this.determineAdvantageScore();
-    }
 
-    return this.determineRegularScore();
+    if (this.scoreIsAdvantage()) {
+        return this.outputAdvantageScore();
+    }
+    const regularScorePrinter = new RegularScorePrinter();
+    return regularScorePrinter.print(this.playerOneScore(), this.playerTwoScore());
 };
 
 TennisGame1.prototype.differenceBetweenPlayerScores = function() {
     return Math.abs(this.scores[_playerOneName] - this.scores[_playerTwoName]);
+}
+
+class RegularScorePrinter {
+    print(playerOneScore, playerTwoScore) {
+        return ScoreName[playerOneScore] + SCORE_SEPARATOR + ScoreName[playerTwoScore]
+    }
 }
 
 if (typeof window === "undefined") {
